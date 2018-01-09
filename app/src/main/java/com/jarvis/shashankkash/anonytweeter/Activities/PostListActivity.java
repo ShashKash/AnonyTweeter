@@ -112,6 +112,13 @@ public class PostListActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
+                /*Tweet tweet = dataSnapshot.getValue(Tweet.class);
+
+                tweetList.add(tweet);
+
+                tweetRecyclerAdapter = new TweetRecyclerAdapter(PostListActivity.this, tweetList);
+                recyclerView.setAdapter(tweetRecyclerAdapter);
+                tweetRecyclerAdapter.notifyDataSetChanged();*/
 
             }
 
