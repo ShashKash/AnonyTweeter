@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -110,14 +111,6 @@ public class PostListActivity extends AppCompatActivity {
         mDatabaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                Tweet tweet = dataSnapshot.getValue(Tweet.class);
-
-                tweetList.add(tweet);
-
-                tweetRecyclerAdapter = new TweetRecyclerAdapter(com.jarvis.shashankkash.anonytweeter.Activities.PostListActivity.this,tweetList);
-                recyclerView.setAdapter(tweetRecyclerAdapter);
-                tweetRecyclerAdapter.notifyDataSetChanged();
 
 
             }

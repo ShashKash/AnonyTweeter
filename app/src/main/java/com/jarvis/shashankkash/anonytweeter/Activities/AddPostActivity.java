@@ -3,15 +3,18 @@ package com.jarvis.shashankkash.anonytweeter.Activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -92,7 +95,7 @@ public class AddPostActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == GALLERY_CODE && requestCode == RESULT_OK) {
+        if(requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
             mImageUri = data.getData();
             mPostImage.setImageURI(mImageUri);
 
@@ -120,20 +123,30 @@ public class AddPostActivity extends AppCompatActivity {
 
                     DatabaseReference newPost = mPostDatabase.push();
 
-                    Map<String, String> dataToSave = new HashMap<>();
+                    newPost.child("title").setValue(titleVal);
+                    newPost.child("desc").setValue(descVal);
+                    newPost.child("timestamp").setValue(java.lang.System.currentTimeMillis());
+                    newPost.child("image").setValue(downloadurl.toString());
+
+                    /*Map<String, String> dataToSave = new HashMap<>();
                     dataToSave.put("title", titleVal);
                     dataToSave.put("desc" , descVal);
                     dataToSave.put("image", downloadurl.toString());
                     dataToSave.put("timestamp", String.valueOf(java.lang.System.currentTimeMillis()));
                     dataToSave.put("userid", mUser.getUid());
 
-                    newPost.setValue(dataToSave);
+                    newPost.setValue(dataToSave);*/
 
                     mProgress.dismiss();
 
                     startActivity(new Intent(AddPostActivity.this, PostListActivity.class));
                     finish();
 
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("Error", "Image not added to storage");
                 }
             });
 
@@ -152,6 +165,9 @@ public class AddPostActivity extends AppCompatActivity {
 
                 }
             });
+        }else{
+            mProgress.dismiss();
+            Toast.makeText(AddPostActivity.this, "Complete the fields! ",Toast.LENGTH_SHORT).show();
         }
 
     }

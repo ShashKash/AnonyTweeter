@@ -1,10 +1,12 @@
 package com.jarvis.shashankkash.anonytweeter.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -20,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.jarvis.shashankkash.anonytweeter.Manifest;
 import com.jarvis.shashankkash.anonytweeter.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                android.Manifest.permission.INTERNET, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE
+        }, 0);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -49,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 mUser = firebaseAuth.getCurrentUser();
 
-                if(mUser != null){
+                if (mUser != null) {
                     Toast.makeText(MainActivity.this, "Signed in !!", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(MainActivity.this, com.jarvis.shashankkash.anonytweeter.Activities.PostListActivity.class));
                     finish();
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, "Not Signed in !", Toast.LENGTH_LONG).show();
                 }
             }
@@ -63,21 +69,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!TextUtils.isEmpty(emailField.getText().toString())
-                        && !TextUtils.isEmpty(passwordField.getText().toString())){
+                if (!TextUtils.isEmpty(emailField.getText().toString())
+                        && !TextUtils.isEmpty(passwordField.getText().toString())) {
 
                     String email = emailField.getText().toString();
                     String pwd = passwordField.getText().toString();
 
-                    login(email,pwd);
+                    login(email, pwd);
 
-                }else {
+                } else {
 
                 }
 
             }
         });
-
 
 
     }
@@ -88,13 +93,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Toast.makeText(MainActivity.this, "Signed in", Toast.LENGTH_LONG).show();
 
                     startActivity(new Intent(MainActivity.this, com.jarvis.shashankkash.anonytweeter.Activities.PostListActivity.class));
                     finish();
 
-                }else{
+                } else {
                     //Not in
                 }
 
@@ -129,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         //noinspection SimplifiableIfStatement
-        if(item.getItemId() == R.id.action_signout){
+        if (item.getItemId() == R.id.action_signout) {
 
             mAuth.signOut();
 
