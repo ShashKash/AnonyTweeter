@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "850465860291",
+    "firebase_url": "https://anonytweeter.firebaseio.com",
+    "project_id": "anonytweeter",
+    "storage_bucket": "anonytweeter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:850465860291:android:954939a74c8c6c17",
+        "android_client_info": {
+          "package_name": "com.jarvis.shashankkash.anonytweeter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "850465860291-4vrnn5us5lrieu7lt9j2vbfmrbv36k8i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jarvis.shashankkash.anonytweeter",
+            "certificate_hash": "76c645549a94f3cf8af928ec544f830bae4dd95f"
+          }
+        },
+        {
+          "client_id": "850465860291-nhs51jrvvgi7b2ls3subscfkbg1rlh53.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpoLWEfdaNmbvykhKQRzBM6sBJK-X6x9M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "850465860291-nhs51jrvvgi7b2ls3subscfkbg1rlh53.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
