@@ -113,8 +113,8 @@ public class AddPostActivity extends AppCompatActivity {
                 &&  mImageUri != null) {
             //start uploading with image...
 
+            StorageReference filepath = mStorage.child("M").child(mImageUri.getLastPathSegment());
 
-            StorageReference filepath = mStorage.child("MTweet_images").child(mImageUri.getLastPathSegment());
             filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -128,14 +128,14 @@ public class AddPostActivity extends AppCompatActivity {
                     newPost.child("timestamp").setValue(java.lang.System.currentTimeMillis());
                     newPost.child("image").setValue(downloadurl.toString());
 
-                    /*Map<String, String> dataToSave = new HashMap<>();
+                    /* Map<String, String> dataToSave = new HashMap<>();
                     dataToSave.put("title", titleVal);
                     dataToSave.put("desc" , descVal);
                     dataToSave.put("image", downloadurl.toString());
                     dataToSave.put("timestamp", String.valueOf(java.lang.System.currentTimeMillis()));
                     dataToSave.put("userid", mUser.getUid());
 
-                    newPost.setValue(dataToSave);*/
+                    newPost.setValue(dataToSave); */
 
                     mProgress.dismiss();
 
