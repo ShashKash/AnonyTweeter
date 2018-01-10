@@ -151,21 +151,6 @@ public class AddPostActivity extends AppCompatActivity {
                 }
             });
 
-        }else if(!TextUtils.isEmpty(titleVal) && !TextUtils.isEmpty(descVal)) {
-
-            Tweet tweet = new Tweet(titleVal, descVal, "imageurl", String.valueOf(java.lang.System.currentTimeMillis()), mUser.getUid());
-
-            mPostDatabase.setValue(tweet).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Toast.makeText(getApplicationContext(), "Item Added", Toast.LENGTH_LONG).show();;
-                    mProgress.dismiss();
-
-                    startActivity(new Intent(AddPostActivity.this, PostListActivity.class));
-                    finish();
-
-                }
-            });
         }else{
             mProgress.dismiss();
             Toast.makeText(AddPostActivity.this, "Complete the fields! ",Toast.LENGTH_SHORT).show();

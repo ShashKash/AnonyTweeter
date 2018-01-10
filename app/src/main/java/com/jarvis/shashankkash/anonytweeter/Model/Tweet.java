@@ -9,14 +9,14 @@ public class Tweet {
     public String title;
     public String desc;
     public String image;
-    public String timestamp;
+    public Long timestamp;
     public String userid;
 
 
     public Tweet() {
     }
 
-    public Tweet(String title, String desc, String image, String timestamp, String userid) {
+    public Tweet(String title, String desc, String image, Long timestamp, String userid) {
         this.title = title;
         this.desc = desc;
         this.image = image;
@@ -48,11 +48,11 @@ public class Tweet {
         this.image = image;
     }
 
-    public String getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 

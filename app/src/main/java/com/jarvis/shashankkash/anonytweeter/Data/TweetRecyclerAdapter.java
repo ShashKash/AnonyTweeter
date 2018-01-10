@@ -1,5 +1,6 @@
 package com.jarvis.shashankkash.anonytweeter.Data;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.jarvis.shashankkash.anonytweeter.Model.Tweet;
 import com.jarvis.shashankkash.anonytweeter.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.List;
@@ -45,12 +47,17 @@ public class TweetRecyclerAdapter extends RecyclerView.Adapter<TweetRecyclerAdap
         holder.title.setText(tweet.getTitle());
         holder.desc.setText(tweet.getDesc());
 
+
         java.text.DateFormat dateFormat = java.text.DateFormat.getInstance();
         String formattedDate = dateFormat.format(new Date(Long.valueOf(tweet.getTimestamp())).getTime());
 
-        holder.timestamp.setText(tweet.getTimestamp());
+        holder.timestamp.setText(formattedDate);
 
         imageURL = tweet.getImage();
+
+        Picasso.with(context)
+                .load(imageURL)
+                .into(holder.image);
 
     }
 
@@ -71,9 +78,9 @@ public class TweetRecyclerAdapter extends RecyclerView.Adapter<TweetRecyclerAdap
             super(view);
             context = ctx;
 
-            title = (EditText) view.findViewById(R.id.postTitleList);
-            desc = (EditText) view.findViewById(R.id.postTextList);
-            timestamp = (EditText) view.findViewById(R.id.timestampList);
+            title = (TextView) view.findViewById(R.id.postTitleList);
+            desc = (TextView) view.findViewById(R.id.postTextList);
+            timestamp = (TextView) view.findViewById(R.id.timestampList);
             image = (ImageView) view.findViewById(R.id.postImageList);
 
             userid = null;
