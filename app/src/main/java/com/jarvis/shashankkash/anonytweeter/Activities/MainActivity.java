@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordField;
     private Button loginButton;
     private FirebaseUser mUser;
+    private Button createAccountBt;
 
 
     @Override
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         emailField = (EditText) findViewById(R.id.loginEmailEt);
         passwordField = (EditText) findViewById(R.id.loginPasswordEt);
         loginButton = (Button) findViewById(R.id.login_buttonID);
+        createAccountBt = (Button) findViewById(R.id.createaccountfirst);
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -64,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
+        createAccountBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CreateAccountActivity.class));
+                finish();
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

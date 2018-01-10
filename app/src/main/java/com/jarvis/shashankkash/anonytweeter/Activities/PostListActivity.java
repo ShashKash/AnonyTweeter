@@ -24,6 +24,8 @@ import com.jarvis.shashankkash.anonytweeter.Model.Tweet;
 import com.jarvis.shashankkash.anonytweeter.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class PostListActivity extends AppCompatActivity {
@@ -116,6 +118,8 @@ public class PostListActivity extends AppCompatActivity {
 
                 tweetList.add(tweet);
 
+                Collections.reverse(tweetList);
+
                 tweetRecyclerAdapter = new TweetRecyclerAdapter(PostListActivity.this, tweetList);
                 recyclerView.setAdapter(tweetRecyclerAdapter);
                 tweetRecyclerAdapter.notifyDataSetChanged();
@@ -129,6 +133,16 @@ public class PostListActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                Tweet tweet = dataSnapshot.getValue(Tweet.class);
+
+                tweetList.remove(tweet);
+
+                Collections.reverse(tweetList);
+
+                tweetRecyclerAdapter = new TweetRecyclerAdapter(PostListActivity.this, tweetList);
+                recyclerView.setAdapter(tweetRecyclerAdapter);
+                tweetRecyclerAdapter.notifyDataSetChanged();
 
             }
 

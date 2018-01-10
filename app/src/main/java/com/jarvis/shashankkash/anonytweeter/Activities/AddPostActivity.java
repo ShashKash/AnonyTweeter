@@ -25,6 +25,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.jarvis.shashankkash.anonytweeter.Model.Tweet;
 import com.jarvis.shashankkash.anonytweeter.R;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +43,7 @@ public class AddPostActivity extends AppCompatActivity {
     private FirebaseUser mUser;
     private DatabaseReference mPostDatabase;
     private ProgressDialog mProgress;
-    private Uri mImageUri;
+    private Uri resultantUri;
     private static final int GALLERY_CODE = 1;
 
     @Override
@@ -95,12 +97,27 @@ public class AddPostActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
-            mImageUri = data.getData();
-            mPostImage.setImageURI(mImageUri);
+        if(requestCode==GALLERY_CODE && resultCode == RESULT_OK) {
+            Uri mImageUri = data.getData();
+
+            CropImage.activity(mImageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(this);
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                resultantUri = result.getUri();
+
+                mPostImage.setImageURI(resultantUri);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
 
         }
-    }
+
 
     private void startPosting() {
         mProgress.setMessage("Posting Tweet...");
@@ -110,12 +127,12 @@ public class AddPostActivity extends AppCompatActivity {
         final String descVal = mPostDesc.getText().toString().trim();
 
         if(!TextUtils.isEmpty(titleVal) && !TextUtils.isEmpty(descVal)
-                &&  mImageUri != null) {
+                &&  resultantUri != null) {
             //start uploading with image...
 
-            StorageReference filepath = mStorage.child("MTweet_images").child(mImageUri.getLastPathSegment());
+            StorageReference filepath = mStorage.child("MTweet_images").child(resultantUri.getLastPathSegment());
 
-            filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            filepath.putFile(resultantUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
